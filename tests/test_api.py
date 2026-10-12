@@ -21,3 +21,9 @@ def test_metrics_counts_requests(client):
     body = client.get("/metrics").text
     assert 'http_requests_total{method="GET",path="/",status="200"}' in body
     assert "http_request_duration_seconds" in body
+
+
+def test_reset(client):
+    response = client.post("/reset")
+    assert response.status_code == 200
+    assert response.json() == {"visites":0}
