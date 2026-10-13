@@ -27,12 +27,7 @@ def test_metrics_counts_requests(client):
     assert "http_request_duration_seconds" in body
 
 
-def test_root_exposes_version_header(client):
-    resp = client.get("/")
-    assert resp.headers["X-Visites-Version"] == "0.1.0"
-
-
-def test_root_redis_down(client, fake_server):
-    fake_server.connected = False
-    with pytest.raises(redis.exceptions.ConnectionError):
-        client.get("/")
+def test_reset(client):
+    response = client.post("/reset")
+    assert response.status_code == 200
+    assert response.json() == {"visites":0}

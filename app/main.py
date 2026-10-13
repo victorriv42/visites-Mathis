@@ -39,6 +39,13 @@ def root(response: Response):
     return {"visites": n}
 
 
+@app.post("/reset")
+def reset():
+    r.set("visites", 0)
+    return {"visites": 0}
+
+
+
 @app.get("/health")
 def health():
     try:
