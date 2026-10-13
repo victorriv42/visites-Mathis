@@ -1,3 +1,7 @@
+import pytest
+import redis
+
+
 def test_root_increments(client):
     assert client.get("/").json() == {"visites": 1}
     assert client.get("/").json() == {"visites": 2}
@@ -26,3 +30,9 @@ def test_metrics_counts_requests(client):
 def test_root_exposes_version_header(client):
     resp = client.get("/")
     assert resp.headers["X-Visites-Version"] == "0.1.0"
+
+
+def test_root_redis_down(client, fake_server):
+    fake_server.connected = False
+    with pytest.raises(redis.exceptions.ConnectionError):
+        client.get("/")
