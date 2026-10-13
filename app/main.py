@@ -45,7 +45,6 @@ def reset():
     return {"visites": 0}
 
 
-
 @app.get("/health")
 def health():
     try:
