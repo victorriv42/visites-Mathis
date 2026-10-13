@@ -1,7 +1,3 @@
-import pytest
-import redis
-
-
 def test_root_increments(client):
     assert client.get("/").json() == {"visites": 1}
     assert client.get("/").json() == {"visites": 2}
@@ -30,4 +26,4 @@ def test_metrics_counts_requests(client):
 def test_reset(client):
     response = client.post("/reset")
     assert response.status_code == 200
-    assert response.json() == {"visites":0}
+    assert response.json() == {"visites": 0}
